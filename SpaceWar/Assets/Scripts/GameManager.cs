@@ -6,17 +6,18 @@ using UnityEngine;
 
 namespace BGE.States
 {
-
 	public class GameManager : MonoBehaviour {
 
 		public List<GameObject> allyPatrolShip = new List<GameObject>();
 		public static List<GameObject> enemyForces = new List<GameObject>();
 		public static List<GameObject> allyForces = new List<GameObject>();
 		public List<GameObject> entities = new List<GameObject>();
-		public GameObject enemyForceGO, allyForceGO;
+		public GameObject enemyForceGO, allyForceGO, asteroidGO;
 		public Vector3 warpedPos;
 		public int enemyForceCount = 10;
 		public int allyForceCount = 10;
+		public int asteroidCount = 10;
+		int asteroidCounter = 6;
 
 		public static float assaultDelay = 5f; //for the enemy forces assault after they warp in
 		public static bool warpedDiversion = true; //change to false, turn true after short delay, this starts off proceedings!
@@ -24,9 +25,7 @@ namespace BGE.States
 		public static bool warpedAllies;
 		public static bool jammerSearch; 
 
-		GameObject motherShip;
-		GameObject teaser;
-		GameObject jammer;
+		GameObject motherShip, teaser, jammer, asteroidSpawner, teaserWarp;
 		Vector3 warpPos;
 		int whichAllyPatrol; //the ally patrol ship that goes to check out the diversion
 		
@@ -35,6 +34,8 @@ namespace BGE.States
 			teaser = GameObject.Find("EnemyTeaser");
 			motherShip = GameObject.Find ("Mothership");
 			jammer = GameObject.Find ("Jammer");
+			asteroidSpawner = GameObject.Find ("AsteroidSpawner");
+			teaserWarp = GameObject.Find ("TeaserWarp");
 
 			int cnt = 1;
 			for(int i = 0; i < 2; i++)
@@ -46,11 +47,21 @@ namespace BGE.States
 			WarpInDiversion(); //call on timer, initial diversion
 			WarpForces(); //call on timer
 			//WarpAllies();
+			InvokeRepeating("WarpAsteroids", 0f, 4f);
+		//	WarpAsteroids();
+		}
+
+		void Update()
+		{
+			if(asteroidCounter == 0)
+			{
+				CancelInvoke("WarpAsteroids");
+			}
 		}
 
 		void WarpInDiversion()
 		{
-			warpedPos = new Vector3(-80f, 0, -18f);
+			warpedPos = new Vector3(teaserWarp.transform.position.x, teaserWarp.transform.position.y, teaserWarp.transform.position.z);
 			teaser.transform.position = warpedPos;
 
 			int roll = (int)UnityEngine.Random.Range (0, 2);
@@ -111,6 +122,26 @@ namespace BGE.States
 			yield return new WaitForSeconds(assaultDelay);
 			allyPatrolShip[whichAllyPatrol].GetComponent<StateMachine>().SwitchState(new RadioState(allyPatrolShip[whichAllyPatrol], jammer));
 			jammerSearch = true;
+		}
+
+		public void WarpAsteroids()
+		{
+			float xPos = 0, yPos = 0, zPos = 0;
+			for(int i = 0; i < asteroidCount; i++)
+			{
+				Vector3 spawner = new Vector3(asteroidSpawner.transform.position.x + xPos, asteroidSpawner.transform.position.y + yPos, asteroidSpawner.transform.position.z + zPos);
+				GameObject asteroid = Instantiate(asteroidGO, spawner, asteroidSpawner.transform.rotation) as GameObject;
+				Vector3 myPos = new Vector3(asteroid.transform.position.x, asteroid.transform.position.y, asteroid.transform.position.z);
+				xPos += UnityEngine.Random.Range (5f, 7f);
+				yPos += UnityEngine.Random.Range (-3, 3);
+				zPos += UnityEngine.Random.Range (-12, 12);
+				float randomSize = UnityEngine.Random.Range(1.5f, 4.5f);
+				asteroid.transform.localScale = new Vector3 (randomSize, randomSize, randomSize);
+				asteroid.name = "Asteroid";
+				asteroid.GetComponent<StateMachine>().SwitchState(new AsteroidState(asteroid, myPos));
+				entities.Add(asteroid);
+			}
+			asteroidCounter --;
 		}
 	}
 }

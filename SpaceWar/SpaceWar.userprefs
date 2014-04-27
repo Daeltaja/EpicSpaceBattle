@@ -1,17 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Entity.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameManager.cs">
     <Files>
-      <File FileName="Assets\Scripts\Entity.cs" Line="57" Column="1" />
-      <File FileName="Assets\Scripts\Laser.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\SteeringBehaviours.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\ChaseState.cs" Line="1" Column="1" />
-      <File FileName="Assets\Detonator Explosion Framework\System\DetonatorFireball.cs" Line="1" Column="1" />
-      <File FileName="Assets\Detonator Explosion Framework\System\DetonatorBurstEmitter.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\GameManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\AlertState.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\WarpState.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\FireState.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GameManager.cs" Line="128" Column="64" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

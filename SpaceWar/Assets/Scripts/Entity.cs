@@ -9,10 +9,15 @@ namespace BGE.States
 		GameManager gm;
 		public GameObject explosionSmall, explosionBig;
 		public int health = 5;
+		float asteroidRotateSpeed;
 
 		void Start()
 		{
 			gm = GameObject.Find ("GameManager").GetComponent<GameManager>();
+			if(this.gameObject.name == "Asteroid")
+			{
+				asteroidRotateSpeed = Random.Range (14f, 30f);
+			}
 		}
 
 		void TakeDamage(int dmg)
@@ -27,6 +32,13 @@ namespace BGE.States
 
 		void Update()
 		{
+			if(this.gameObject.name == "Asteroid")
+			{
+				transform.Rotate(transform.right * asteroidRotateSpeed * Time.deltaTime);
+			}
+
+
+
 			for(int i = 0; i < gm.entities.Count; i++) //loop through the entity array list
 			{
 				if(gm.entities[i].name == "LaserAlly" != null)

@@ -60,6 +60,7 @@
      <Compile Include="Assets\Detonator Explosion Framework\System\DetonatorSparks.cs" />
      <Compile Include="Assets\Detonator Explosion Framework\System\DetonatorSpray.cs" />
      <Compile Include="Assets\Scripts\AlertState.cs" />
+     <Compile Include="Assets\Scripts\AsteroidState.cs" />
      <Compile Include="Assets\Scripts\CameraManager.cs" />
      <Compile Include="Assets\Scripts\ChaseState.cs" />
      <Compile Include="Assets\Scripts\DiversionState.cs" />
