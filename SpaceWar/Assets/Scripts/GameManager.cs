@@ -44,9 +44,9 @@ namespace BGE.States
 				allyPatrolShip[i].GetComponent<StateMachine>().SwitchState(new PatrolState(allyPatrolShip[i], teaser));
 				cnt++;
 			}
-			WarpInDiversion(); //call on timer, initial diversion
-			WarpForces(); //call on timer
-			//WarpAllies(); //call on timer
+			Invoke ("WarpInDiversion", 4f);
+			Invoke ("WarpForces", 8f);
+			Invoke ("WarpAllies", 12f);
 			InvokeRepeating("WarpAsteroids", 0f, 3f);
 		}
 

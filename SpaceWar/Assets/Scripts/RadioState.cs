@@ -20,6 +20,9 @@ namespace BGE.States
 		public override void Enter()
 		{
 			myGameObject.GetComponent<SteeringBehaviours>().DisableAll();
+			myGameObject.transform.position = new Vector3(10.13f, 3f, 11.1f);
+			myGameObject.transform.localEulerAngles = new Vector3(0, 180, 0);
+
 		}
 
 		public override void Exit()
@@ -29,6 +32,7 @@ namespace BGE.States
 		
 		public override void Update()
 		{
+			myGameObject.GetComponent<SteeringBehaviours>().velocity *= 0f;
 			timer += Time.deltaTime;
 			if(timer >= GameManager.assaultDelay)
 			{

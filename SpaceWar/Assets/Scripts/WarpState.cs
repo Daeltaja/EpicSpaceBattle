@@ -37,7 +37,6 @@ namespace BGE.States
 			if(enemyGameObject.name.StartsWith("Mothership"))
 			{
 				delayTimer += Time.deltaTime;
-				Debug.Log (delayTimer);
 				if(delayTimer >= GameManager.assaultDelay) //this is the time the enemy forces wait before attacking Mothership
 				{
 					delayTimer = 0;
