@@ -20,7 +20,7 @@ namespace BGE.States
 		{
 			myGameObject.GetComponent<SteeringBehaviours>().DisableAll();
 			myGameObject.GetComponent<SteeringBehaviours>().followPathEnabled = true;
-			myGameObject.GetComponent<SteeringBehaviours>().maxSpeed -= 2f;
+
 		}
 		
 		public override void Exit()

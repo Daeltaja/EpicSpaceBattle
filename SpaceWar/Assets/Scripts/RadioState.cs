@@ -5,7 +5,7 @@ namespace BGE.States
 	public class RadioState : State
 	{
 		GameObject jammer;
-		float timer;
+		float timer = 2f;
 		
 		public override string Description()
 		{
@@ -33,7 +33,8 @@ namespace BGE.States
 			if(timer >= GameManager.assaultDelay)
 			{
 				timer = 0;
-				myGameObject.GetComponent<StateMachine>().SwitchState(new AlertState(myGameObject, jammer)); //enemy = ally in this case
+				jammer = GameObject.Find ("Jammer");
+				myGameObject.GetComponent<StateMachine>().SwitchState(new SearchState(myGameObject, jammer)); //enemy = ally in this case
 			}
 		}
 	}

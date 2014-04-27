@@ -15,6 +15,7 @@ namespace BGE
         public bool offsetPursuitEnabled;
         public bool followPathEnabled;
         public bool obstacleAvoidEnabled;
+		public bool lookAtShootEnabled;
 
         //integrator 
         public float mass;
@@ -31,6 +32,7 @@ namespace BGE
         public GameObject pursuitTarget;
         public GameObject evadeTarget;
         public GameObject offsetPursuitTarget;
+		public GameObject laser;
 
 		public float defaultRadius = 5.0f;
 		public Path path = new Path();
@@ -53,6 +55,7 @@ namespace BGE
             arriveEnabled = false;
             followPathEnabled = false;
             obstacleAvoidEnabled = false;
+			lookAtShootEnabled = false;
         }
 
         #region Steering Behaviours
@@ -81,7 +84,7 @@ namespace BGE
             {
                 return Vector3.zero;
             }
-            const float decelTweak = 0.0f;
+            const float decelTweak = 10.0f;
             float rampedSpeed = maxSpeed * (distance / (slowingDistance * decelTweak));
             float clampedSpeed = Mathf.Min(rampedSpeed, maxSpeed);
             Vector3 desiredPos = clampedSpeed * (toTarget / distance);
@@ -126,21 +129,6 @@ namespace BGE
 				path.AdvanceToNext();
 			}
 			return Seek(path.NextWaypoint());
-			/*Vector3 desired = path.waypoints[path.currWaypoint] - transform.position; //vector for distance between current waypoint and spheres position
-			float changeDistance = 1.0f; 
-			if(desired.magnitude < changeDistance) //when sphere gets within 1 unit of waypoint, iterate to next waypoint
-			{
-				path.currWaypoint++; 
-			}
-			if(path.currWaypoint == path.waypoints.Count) //if sphere reaches the final waypoint, reset it to zero, so the FollowPath() keeps looping
-			{
-				path.currWaypoint = 0;
-				return Arrive (path.waypoints[path.currWaypoint]); //call Arrive for the final waypoint
-			}
-			else
-			{
-				return Seek (path.waypoints[path.currWaypoint]); //seek for all waypoint except final waypoint
-			}*/return Vector3.zero;
 		}
 
         Vector3 ObstacleAvoidance()
@@ -227,6 +215,14 @@ namespace BGE
             }
             return force;
         }
+
+		Vector3 LookAtShoot(Vector3 targetPos)
+		{
+			Vector3 desiredPos = targetPos - transform.position;
+			desiredPos.Normalize();
+			//desiredPos *= maxSpeed;
+			return (desiredPos - velocity);
+		}
         #endregion
 
         #region Update
@@ -263,6 +259,10 @@ namespace BGE
 			if (obstacleAvoidEnabled)
 			{
 				force += ObstacleAvoidance();
+			}
+			if(lookAtShootEnabled)
+			{
+				force += LookAtShoot(seekPos);
 			}
             //Force Integrator
             Vector3 accel = force / mass; //new vector for acceleration, which is the forceAcc divided by the mass of object

@@ -30,11 +30,12 @@ namespace BGE.States
 		
 		public override void Update()
 		{
-			float range = 22.0f;           
+			float range = 30.0f;           
 
 			if ((allyPatrolShip.transform.position - myGameObject.transform.position).magnitude < range)
 			{
-				myGameObject.GetComponent<StateMachine>().SwitchState(new EvadeState(myGameObject, allyPatrolShip)); //enemy = ally in this case
+				GameObject targetPos = GameObject.Find ("TargetPos");
+				myGameObject.GetComponent<StateMachine>().SwitchState(new AlertState(myGameObject, targetPos)); //enemy = ally in this case
 			}
 		}
 	}

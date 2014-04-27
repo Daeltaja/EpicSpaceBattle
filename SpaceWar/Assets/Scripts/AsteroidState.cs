@@ -19,7 +19,7 @@ namespace BGE.States
 		{
 			myGameObject.GetComponent<SteeringBehaviours>().DisableAll();
 			myGameObject.GetComponent<SteeringBehaviours>().seekEnabled = true;
-			myGameObject.GetComponent<SteeringBehaviours>().maxSpeed = UnityEngine.Random.Range (0.8f, 1.2f);
+			myGameObject.GetComponent<SteeringBehaviours>().maxSpeed = UnityEngine.Random.Range (1f, 1.5f);
 			myGameObject.GetComponent<SteeringBehaviours>().seekPos = myGameObject.transform.position + new Vector3(myGameObject.transform.position.x, myGameObject.transform.position.y, myGameObject.transform.position.z + 250f);
 		}
 		

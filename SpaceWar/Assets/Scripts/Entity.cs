@@ -46,7 +46,7 @@ namespace BGE.States
 					if(gm.entities[i].name == "LaserAlly")
 					{
 						{
-							if(this.name.Contains("Enemy"))
+							if(this.name.Contains("Enemy") || this.name.Contains("Tower"))
 							{
 								GameObject laser = gm.entities[i];
 								if((transform.position - laser.transform.position).magnitude < 2f)
@@ -73,6 +73,21 @@ namespace BGE.States
 							{
 								GameObject laser = gm.entities[i];
 								if((transform.position - laser.transform.position).magnitude < 2f)
+								{
+									Vector3 diePos = new Vector3(laser.transform.position.x, laser.transform.position.y, laser.transform.position.z)+laser.transform.forward / transform.localScale.z / 4;
+									GameObject explodeSmall = Instantiate(explosionSmall, diePos, transform.rotation)as GameObject;
+									laser.transform.position = transform.position;
+									laser.transform.forward = transform.forward;
+									gm.entities.Remove(laser);
+									TakeDamage(1);
+								}
+							}
+							if(this.name.Contains("Mother"))
+							{
+								GameObject laser = gm.entities[i];
+								Vector3 laserPos = new Vector3(laser.transform.position.x, laser.transform.position.y, laser.transform.position.z);
+								Vector3 mShipPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+								if(Mathf.Abs((laserPos - mShipPos).z) <= 10)
 								{
 									Vector3 diePos = new Vector3(laser.transform.position.x, laser.transform.position.y, laser.transform.position.z)+laser.transform.forward / transform.localScale.z / 4;
 									GameObject explodeSmall = Instantiate(explosionSmall, diePos, transform.rotation)as GameObject;

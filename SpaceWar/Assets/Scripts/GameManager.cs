@@ -27,7 +27,7 @@ namespace BGE.States
 
 		GameObject motherShip, teaser, jammer, asteroidSpawner, teaserWarp;
 		Vector3 warpPos;
-		int whichAllyPatrol; //the ally patrol ship that goes to check out the diversion
+		public static int whichAllyPatrol; //the ally patrol ship that goes to check out the diversion
 		
 		void Start () 
 		{
@@ -46,9 +46,8 @@ namespace BGE.States
 			}
 			WarpInDiversion(); //call on timer, initial diversion
 			WarpForces(); //call on timer
-			//WarpAllies();
-			InvokeRepeating("WarpAsteroids", 0f, 4f);
-		//	WarpAsteroids();
+			//WarpAllies(); //call on timer
+			InvokeRepeating("WarpAsteroids", 0f, 3f);
 		}
 
 		void Update()
@@ -65,7 +64,6 @@ namespace BGE.States
 			teaser.transform.position = warpedPos;
 
 			int roll = (int)UnityEngine.Random.Range (0, 2);
-			Debug.Log(roll);
 			if(roll == 0)
 			{
 				allyPatrolShip[0].GetComponent<StateMachine>().SwitchState(new AlertState(allyPatrolShip[0], teaser)); //enemy = ally in this case
@@ -83,14 +81,14 @@ namespace BGE.States
 
 		void WarpForces() //forces warp into existance!
 		{
-			float xPos = -20, yPos = 0, zPos = -40; //change the spawn in position of the enemy forces here!
+			float xPos = -20, yPos = 3, zPos = -40; //change the spawn in position of the enemy forces here!
 			for(int i = 0; i < enemyForceCount; i++)
 			{
 				Vector3 randPos = new Vector3(xPos, yPos, zPos);
 				GameObject enemyForce = Instantiate(enemyForceGO, randPos, Quaternion.identity) as GameObject;
 				xPos += UnityEngine.Random.Range (5, 10);
-				yPos += UnityEngine.Random.Range (-3, 3);
-				zPos += UnityEngine.Random.Range (-3, 3);
+				yPos += UnityEngine.Random.Range (-.5f, .5f);
+				zPos += UnityEngine.Random.Range (-2, 2);
 				
 				enemyForce.name = "EnemyForce";
 				enemyForce.GetComponent<StateMachine>().SwitchState(new WarpState(enemyForce, motherShip));
@@ -108,7 +106,7 @@ namespace BGE.States
 				GameObject allyForce = Instantiate(allyForceGO, randPos, Quaternion.identity) as GameObject;
 				xPos += UnityEngine.Random.Range (5, 10);
 				yPos += UnityEngine.Random.Range (-3, 3);
-				zPos += UnityEngine.Random.Range (-3, 3);
+				zPos += UnityEngine.Random.Range (-1, 1);
 				
 				allyForce.name = "AllyForce";
 				allyForce.GetComponent<StateMachine>().SwitchState(new AlertState(allyForce, allyForce)); //CIRCLE FIRE STATE
@@ -132,10 +130,10 @@ namespace BGE.States
 				Vector3 spawner = new Vector3(asteroidSpawner.transform.position.x + xPos, asteroidSpawner.transform.position.y + yPos, asteroidSpawner.transform.position.z + zPos);
 				GameObject asteroid = Instantiate(asteroidGO, spawner, asteroidSpawner.transform.rotation) as GameObject;
 				Vector3 myPos = new Vector3(asteroid.transform.position.x, asteroid.transform.position.y, asteroid.transform.position.z);
-				xPos += UnityEngine.Random.Range (5f, 7f);
-				yPos += UnityEngine.Random.Range (-3, 3);
-				zPos += UnityEngine.Random.Range (-12, 12);
-				float randomSize = UnityEngine.Random.Range(1.5f, 4.5f);
+				xPos += UnityEngine.Random.Range (6f, 10f);
+				yPos += UnityEngine.Random.Range (-8, 8);
+				zPos += UnityEngine.Random.Range (-10, 10);
+				float randomSize = UnityEngine.Random.Range(1.5f, 7.5f);
 				asteroid.transform.localScale = new Vector3 (randomSize, randomSize, randomSize);
 				asteroid.name = "Asteroid";
 				asteroid.GetComponent<StateMachine>().SwitchState(new AsteroidState(asteroid, myPos));

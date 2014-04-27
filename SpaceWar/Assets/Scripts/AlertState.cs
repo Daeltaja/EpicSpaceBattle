@@ -22,6 +22,7 @@ namespace BGE.States
 			myGameObject.GetComponent<SteeringBehaviours>().seekEnabled = true;
 			myGameObject.GetComponent<SteeringBehaviours>().obstacleAvoidEnabled = true;
 			myGameObject.GetComponent<SteeringBehaviours>().seekPos = enemyGameObject.transform.position;
+			myGameObject.GetComponent<SteeringBehaviours>().maxSpeed = 12f;
 		}
 		
 		public override void Exit()
@@ -33,22 +34,19 @@ namespace BGE.States
 		{
 			if(enemyGameObject.name.StartsWith("EnemyTeaser"))
 			{
-				if((myGameObject.transform.position - enemyGameObject.transform.position).magnitude < 25f)
+				if((myGameObject.transform.position - enemyGameObject.transform.position).magnitude < 32f)
 				{
 					GameManager.warpedDiversion = false;
 					myGameObject.GetComponent<StateMachine>().SwitchState(new ChaseState(myGameObject, enemyGameObject));
 				}
 			}
 
-			//this is for ally patrol ship spotting the enemy jammers
-			if(GameManager.jammerSearch)
+			if(myGameObject.name.StartsWith("EnemyTeaser"))
 			{
-				if(enemyGameObject.name.StartsWith("Jammer"))
+				if(Vector3.Distance(myGameObject.transform.position, enemyGameObject.transform.position) < 1f)
 				{
-					if(Vector3.Distance(myGameObject.transform.position, enemyGameObject.transform.position) < 30f)
-					{
-						myGameObject.GetComponent<StateMachine>().SwitchState(new FireState(myGameObject, enemyGameObject));
-					}
+					enemyGameObject = GameObject.Find ("AllyPatrolShip"+GameManager.whichAllyPatrol);
+					myGameObject.GetComponent<StateMachine>().SwitchState(new EvadeState(myGameObject, enemyGameObject));
 				}
 			}
 

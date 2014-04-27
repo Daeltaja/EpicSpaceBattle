@@ -4,9 +4,10 @@ namespace BGE.States
 {
 	public class FireState : State 
 	{
-		GameObject target;
+		GameObject target, laserGO;
 		float shootTime;
 		float delayStateChange;
+		float randomShoot;
 
 		public override string Description()
 		{
@@ -21,6 +22,14 @@ namespace BGE.States
 		public override void Enter()
 		{
 			myGameObject.GetComponent<SteeringBehaviours>().DisableAll();
+			laserGO = myGameObject.GetComponent<SteeringBehaviours>().laser;
+			randomShoot = Random.Range (.4f, .7f);
+			if(myGameObject.name.Contains("AllyPatrol"))
+			{
+				myGameObject.GetComponent<SteeringBehaviours>().lookAtShootEnabled = true;
+				myGameObject.GetComponent<SteeringBehaviours>().seekPos = target.transform.position;
+				myGameObject.GetComponent<SteeringBehaviours>().maxSpeed = 0f;
+			}
 		}
 		
 		public override void Exit()
@@ -30,9 +39,24 @@ namespace BGE.States
 		
 		public override void Update()
 		{
-			float range = 50.0f;           
-			
-			if ((target.transform.position - myGameObject.transform.position).magnitude < range)
+			if(target != null)
+			{
+				Shoot();
+			}
+			JammerSpotter();
+			if(GameManager.warpedAllies)
+			{
+				if(myGameObject.name == "EnemyForce")
+				{
+					myGameObject.GetComponent<StateMachine>().SwitchState(new AlertState(myGameObject, target)); 
+				}
+			}
+		}
+		void Shoot()
+		{
+			float range = 100.0f;           	
+
+			if ((myGameObject.transform.position - target.transform.position).magnitude < range)
 			{
 				shootTime += Time.deltaTime;
 				float fov = Mathf.PI / 4.0f;
@@ -43,22 +67,26 @@ namespace BGE.States
 				
 				if (angle < fov)
 				{
-					if (shootTime > 0.25f)
+					if (shootTime > randomShoot)
 					{
-						GameObject laserGO = GameObject.Find ("Laser");
-						GameObject laser = MonoBehaviour.Instantiate(laserGO, myGameObject.transform.position, Quaternion.identity)as GameObject;
+						GameObject laser = MonoBehaviour.Instantiate(laserGO, myGameObject.transform.position+myGameObject.transform.forward*1f, Quaternion.identity)as GameObject;
 						laser.transform.position = myGameObject.transform.position;
 						laser.transform.forward = myGameObject.transform.forward;
+						laser.name = myGameObject.GetComponent<SteeringBehaviours>().laser.name;
 						shootTime = 0.0f;
 					}
 				}
 			}
+		}
 
-			if(GameManager.warpedAllies)
+		void JammerSpotter()
+		{
+			if(myGameObject.name.Contains("Ally"))
 			{
-				if(myGameObject.name == "EnemyForce")
+				if(target == null)
 				{
-					myGameObject.GetComponent<StateMachine>().SwitchState(new AlertState(myGameObject, target)); 
+					target = GameObject.Find ("Tower2");
+					myGameObject.GetComponent<SteeringBehaviours>().seekPos = target.transform.position;
 				}
 			}
 		}

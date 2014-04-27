@@ -4,7 +4,7 @@ namespace BGE.States
 {
 	public class ChaseState : State
 	{
-		GameObject enemyGameObject;
+		GameObject enemyGameObject, laserGO;
 		float shootTime = 0.25f;
 		
 		public override string Description()
@@ -22,7 +22,9 @@ namespace BGE.States
 			myGameObject.GetComponent<SteeringBehaviours>().DisableAll();
 			myGameObject.GetComponent<SteeringBehaviours>().offsetPursuitEnabled = true;
 			myGameObject.GetComponent<SteeringBehaviours>().offsetPursuitTarget = enemyGameObject;
-			myGameObject.GetComponent<SteeringBehaviours>().maxSpeed += 2f;
+			myGameObject.GetComponent<SteeringBehaviours>().obstacleAvoidEnabled = true;
+			laserGO = myGameObject.GetComponent<SteeringBehaviours>().laser;
+			myGameObject.GetComponent<SteeringBehaviours>().maxSpeed = 12f;
 		}
 		
 		public override void Exit()
@@ -48,25 +50,14 @@ namespace BGE.States
 			{
 				if (shootTime > 0.25f)
 				{
-					if(myGameObject.name.Contains("Ally"))
-					{
-						GameObject laserGO = GameObject.Find ("LaserAlly");
 						GameObject laser = MonoBehaviour.Instantiate(laserGO, myGameObject.transform.position, Quaternion.identity)as GameObject;
+						laser.name = myGameObject.GetComponent<SteeringBehaviours>().laser.name;
 						laser.transform.position = myGameObject.transform.position;
 						laser.transform.forward = myGameObject.transform.forward;
+						
 						shootTime = 0.0f;
-					}
-					else if(myGameObject.name.Contains("Enemy"))
-					{
-						GameObject laserGO = GameObject.Find ("LaserEnemy");
-						GameObject laser = MonoBehaviour.Instantiate(laserGO, myGameObject.transform.position, Quaternion.identity)as GameObject;
-						laser.transform.position = myGameObject.transform.position;
-						laser.transform.forward = myGameObject.transform.forward;
-						shootTime = 0.0f;
-					}
 				}
 			}
-
 		}
 	}
 }
