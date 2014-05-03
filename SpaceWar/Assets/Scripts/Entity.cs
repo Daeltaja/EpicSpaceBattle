@@ -25,6 +25,14 @@ namespace BGE.States
 			health -= dmg;
 			if(health <= 0)
 			{
+				if(gameObject.name.Contains("AllyForce"))
+				{
+					GameManager.allyForces.Remove(gameObject);
+				}
+				if(gameObject.name.Contains("EnemyForce"))
+				{
+					GameManager.enemyForces.Remove(gameObject);
+				}
 				Instantiate(explosionBig, transform.position, transform.rotation);
 				Destroy(gameObject);
 			}
@@ -46,14 +54,14 @@ namespace BGE.States
 					if(gm.entities[i].name == "LaserAlly")
 					{
 						{
-							if(this.name.Contains("Enemy") || this.name.Contains("Tower"))
+							if(this.name.Contains("Enemy") || this.name.Contains("Tower") || this.name.Contains("Asteroid"))
 							{
 								GameObject laser = gm.entities[i];
 								if((transform.position - laser.transform.position).magnitude < 2f)
 								{
 									Vector3 diePos = new Vector3(laser.transform.position.x, laser.transform.position.y, laser.transform.position.z)+laser.transform.forward / transform.localScale.z / 3;
                                                                                                                                            
-									GameObject explodeSmall = Instantiate(explosionSmall, diePos, transform.rotation)as GameObject;
+									Instantiate(explosionSmall, diePos, transform.rotation);
 									laser.transform.position = transform.position;
 									laser.transform.forward = transform.forward;
 									Destroy(laser.gameObject);
@@ -75,7 +83,7 @@ namespace BGE.States
 								if((transform.position - laser.transform.position).magnitude < 2f)
 								{
 									Vector3 diePos = new Vector3(laser.transform.position.x, laser.transform.position.y, laser.transform.position.z)+laser.transform.forward / transform.localScale.z / 4;
-									GameObject explodeSmall = Instantiate(explosionSmall, diePos, transform.rotation)as GameObject;
+									Instantiate(explosionSmall, diePos, transform.rotation);
 									laser.transform.position = transform.position;
 									laser.transform.forward = transform.forward;
 									gm.entities.Remove(laser);
@@ -90,7 +98,7 @@ namespace BGE.States
 								if(Mathf.Abs((laserPos - mShipPos).z) <= 10)
 								{
 									Vector3 diePos = new Vector3(laser.transform.position.x, laser.transform.position.y, laser.transform.position.z)+laser.transform.forward / transform.localScale.z / 4;
-									GameObject explodeSmall = Instantiate(explosionSmall, diePos, transform.rotation)as GameObject;
+									Instantiate(explosionSmall, diePos, transform.rotation);
 									laser.transform.position = transform.position;
 									laser.transform.forward = transform.forward;
 									gm.entities.Remove(laser);

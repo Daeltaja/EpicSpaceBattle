@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections;
 using System;
-using UnityEngine;
 
 namespace BGE.States
 {
@@ -17,37 +16,42 @@ namespace BGE.States
 		public int enemyForceCount = 10;
 		public int allyForceCount = 10;
 		public int asteroidCount = 10;
+		public float warpDiversionDelay;
+		public float warpForcesDelay;
+		public float warpAlliesDelay;
+		public float checkOutDiversionDelay;
 		int asteroidCounter = 6;
 
-		public static float assaultDelay = 5f; //for the enemy forces assault after they warp in
+		public static float assaultDelay = 15f; //for the enemy forces assault after they warp in
 		public static bool warpedDiversion = true; //change to false, turn true after short delay, this starts off proceedings!
 		public static bool warpedForces;
 		public static bool warpedAllies;
 		public static bool jammerSearch; 
 
-		GameObject motherShip, teaser, jammer, asteroidSpawner, teaserWarp;
+		GameObject motherShip, teaser, jammer, asteroidSpawner, teaserWarp, cameraManager;
 		Vector3 warpPos;
-		public static int whichAllyPatrol; //the ally patrol ship that goes to check out the diversion
+		CameraManager camManager;
 		
 		void Start () 
 		{
+			cameraManager = GameObject.Find ("GameManager");
+			camManager = cameraManager.GetComponent<CameraManager>();
 			teaser = GameObject.Find("EnemyTeaser");
 			motherShip = GameObject.Find ("Mothership");
 			jammer = GameObject.Find ("Jammer");
 			asteroidSpawner = GameObject.Find ("AsteroidSpawner");
 			teaserWarp = GameObject.Find ("TeaserWarp");
-
 			int cnt = 1;
 			for(int i = 0; i < 2; i++)
 			{
 				allyPatrolShip.Add(GameObject.Find ("AllyPatrolShip"+cnt));
-				allyPatrolShip[i].GetComponent<StateMachine>().SwitchState(new PatrolState(allyPatrolShip[i], teaser));
+				allyPatrolShip[i].GetComponent<StateMachine>().SwitchState(new PatrolState(allyPatrolShip[i]));
 				cnt++;
 			}
-			Invoke ("WarpInDiversion", 4f);
-			Invoke ("WarpForces", 8f);
-			Invoke ("WarpAllies", 12f);
-			InvokeRepeating("WarpAsteroids", 0f, 3f);
+			Invoke ("WarpInDiversion", warpDiversionDelay);
+			Invoke ("WarpForces", warpForcesDelay);
+			Invoke ("WarpAllies", warpAlliesDelay);
+			InvokeRepeating("WarpAsteroids", 0f, 4f);
 		}
 
 		void Update()
@@ -62,21 +66,14 @@ namespace BGE.States
 		{
 			warpedPos = new Vector3(teaserWarp.transform.position.x, teaserWarp.transform.position.y, teaserWarp.transform.position.z);
 			teaser.transform.position = warpedPos;
+			Invoke ("DelayCheck", checkOutDiversionDelay);
+		}
 
-			int roll = (int)UnityEngine.Random.Range (0, 2);
-			if(roll == 0)
-			{
-				allyPatrolShip[0].GetComponent<StateMachine>().SwitchState(new AlertState(allyPatrolShip[0], teaser)); //enemy = ally in this case
-				whichAllyPatrol = 1;
-			}
-			else
-			{
-				allyPatrolShip[1].GetComponent<StateMachine>().SwitchState(new AlertState(allyPatrolShip[1], teaser)); //enemy = ally in this case
-				whichAllyPatrol = 0;
-			}
-			teaser.GetComponent<StateMachine>().SwitchState(new WarpState(teaser, allyPatrolShip[roll]));
+		void DelayCheck()
+		{
 			warpedDiversion = true;
-			StartCoroutine("RadioDelay");
+			allyPatrolShip[0].GetComponent<StateMachine>().SwitchState(new AlertState(allyPatrolShip[0], teaser)); //enemy = ally in this case
+			teaser.GetComponent<StateMachine>().SwitchState(new WarpState(teaser, allyPatrolShip[0]));
 		}
 
 		void WarpForces() //forces warp into existance!
@@ -94,6 +91,7 @@ namespace BGE.States
 				enemyForce.GetComponent<StateMachine>().SwitchState(new WarpState(enemyForce, motherShip));
 				enemyForces.Add(enemyForce);
 			}
+			StartCoroutine("RadioDelay");
 			warpedForces = true;
 		}
 
@@ -117,8 +115,8 @@ namespace BGE.States
 
 		IEnumerator RadioDelay()
 		{
-			yield return new WaitForSeconds(assaultDelay);
-			allyPatrolShip[whichAllyPatrol].GetComponent<StateMachine>().SwitchState(new RadioState(allyPatrolShip[whichAllyPatrol], jammer));
+			yield return new WaitForSeconds(assaultDelay-11f);
+			allyPatrolShip[1].GetComponent<StateMachine>().SwitchState(new RadioState(allyPatrolShip[1], jammer));
 			jammerSearch = true;
 		}
 

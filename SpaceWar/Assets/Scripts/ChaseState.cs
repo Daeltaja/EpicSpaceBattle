@@ -36,28 +36,28 @@ namespace BGE.States
 		{
 			if(enemyGameObject == null)
 			{
-				enemyGameObject = GameObject.Find ("EnemyForce");
-				myGameObject.GetComponent<StateMachine>().SwitchState(new AlertState(myGameObject, enemyGameObject));
-			}
-			shootTime += Time.deltaTime;
-			float fov = Mathf.PI / 4.0f;
-			float angle;
-			Vector3 toEnemy = (enemyGameObject.transform.position - myGameObject.transform.position);
-			toEnemy.Normalize();
-			angle = (float) Mathf.Acos(Vector3.Dot(toEnemy, myGameObject.transform.forward));
-
-			if (angle < fov)
-			{
-				if (shootTime > 0.25f)
+				myGameObject.GetComponent<StateMachine>().SwitchState(new PatrolState(myGameObject));
+				shootTime += Time.deltaTime;
+				float fov = Mathf.PI / 4.0f;
+				float angle;
+				Vector3 toEnemy = (enemyGameObject.transform.position - myGameObject.transform.position);
+				toEnemy.Normalize();
+				angle = (float) Mathf.Acos(Vector3.Dot(toEnemy, myGameObject.transform.forward));
+				
+				if (angle < fov)
 				{
+					if (shootTime > 0.25f)
+					{
 						GameObject laser = MonoBehaviour.Instantiate(laserGO, myGameObject.transform.position, Quaternion.identity)as GameObject;
 						laser.name = myGameObject.GetComponent<SteeringBehaviours>().laser.name;
 						laser.transform.position = myGameObject.transform.position;
 						laser.transform.forward = myGameObject.transform.forward;
 						
 						shootTime = 0.0f;
+					}
 				}
 			}
+
 		}
 	}
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using System;
-using UnityEngine;
+
 namespace BGE.States
 {
 	public class SearchState : State
@@ -41,7 +41,6 @@ namespace BGE.States
 				myGameObject.GetComponent<SteeringBehaviours>().velocity *= 0f;
 
 				timer += Time.deltaTime;
-				Debug.Log (timer);
 				if(timer > 5f)
 				{
 					DelayChange();

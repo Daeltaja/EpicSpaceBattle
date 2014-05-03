@@ -4,16 +4,14 @@ namespace BGE.States
 {
 	public class PatrolState : State
 	{
-		GameObject enemyGameObject;
-
 		public override string Description()
 		{
 			return "Patrolling State";
 		}
 		
-		public PatrolState(GameObject myGameObject, GameObject enemyGameObject) : base(myGameObject)
+		public PatrolState(GameObject myGameObject) : base(myGameObject)
 		{
-			this.enemyGameObject = enemyGameObject;
+
 		}
 		
 		public override void Enter()
@@ -33,9 +31,9 @@ namespace BGE.States
 			if(GameManager.warpedDiversion) //one ship should go alert, other stay patrolling, do this here!
 			{
 				//("Huh");
-				GameObject gmGO = GameObject.Find ("GameManager");
-				GameManager gm = gmGO.GetComponent<GameManager>();
+				
 			}
+
 		}	
 	}
 }

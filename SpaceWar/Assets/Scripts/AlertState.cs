@@ -32,32 +32,29 @@ namespace BGE.States
 		
 		public override void Update()
 		{
-			if(enemyGameObject.name.StartsWith("EnemyTeaser"))
-			{
-				if((myGameObject.transform.position - enemyGameObject.transform.position).magnitude < 32f)
+				if(enemyGameObject.name.StartsWith("EnemyTeaser"))
 				{
-					GameManager.warpedDiversion = false;
-					myGameObject.GetComponent<StateMachine>().SwitchState(new ChaseState(myGameObject, enemyGameObject));
+					if((myGameObject.transform.position - enemyGameObject.transform.position).magnitude < 32f)
+					{
+						GameManager.warpedDiversion = false;
+						myGameObject.GetComponent<StateMachine>().SwitchState(new ChaseState(myGameObject, enemyGameObject));
+					}
+					if(Vector3.Distance(myGameObject.transform.position, enemyGameObject.transform.position) < 1f)
+					{
+						enemyGameObject = GameObject.Find ("AllyPatrolShip1");
+						myGameObject.GetComponent<StateMachine>().SwitchState(new EvadeState(myGameObject, enemyGameObject));
+					}
 				}
-			}
 
-			if(myGameObject.name.StartsWith("EnemyTeaser"))
-			{
-				if(Vector3.Distance(myGameObject.transform.position, enemyGameObject.transform.position) < 1f)
-				{
-					enemyGameObject = GameObject.Find ("AllyPatrolShip"+GameManager.whichAllyPatrol);
-					myGameObject.GetComponent<StateMachine>().SwitchState(new EvadeState(myGameObject, enemyGameObject));
-				}
-			}
 
 			if(myGameObject.name.StartsWith("EnemyForce"))
 			{
-				myGameObject.GetComponent<SteeringBehaviours>().seekPos = new Vector3(myGameObject.transform.position.x, myGameObject.transform.position.y, -200f);
+				myGameObject.GetComponent<StateMachine>().SwitchState(new FireState(myGameObject, enemyGameObject));
 
 			}
 			if(myGameObject.name.StartsWith("AllyForce"))
 			{
-				myGameObject.GetComponent<SteeringBehaviours>().seekPos = new Vector3(myGameObject.transform.position.x, myGameObject.transform.position.y, 200f);
+				myGameObject.GetComponent<StateMachine>().SwitchState(new FireState(myGameObject, enemyGameObject));
 			}
 		}
 	}

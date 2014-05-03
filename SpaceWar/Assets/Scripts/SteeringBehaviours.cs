@@ -121,7 +121,7 @@ namespace BGE
 
 		Vector3 FollowPath()
 		{
-			path.CreatePath(4, 25);
+			path.CreatePath(4, 20);
 			float epsilon = 5.0f;
 			float dist = (transform.position - path.NextWaypoint()).magnitude;
 			if (dist < epsilon)

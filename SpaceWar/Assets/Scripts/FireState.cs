@@ -8,6 +8,7 @@ namespace BGE.States
 		float shootTime;
 		float delayStateChange;
 		float randomShoot;
+		int randomTarget;
 
 		public override string Description()
 		{
@@ -30,28 +31,84 @@ namespace BGE.States
 				myGameObject.GetComponent<SteeringBehaviours>().seekPos = target.transform.position;
 				myGameObject.GetComponent<SteeringBehaviours>().maxSpeed = 0f;
 			}
+
+			if(GameManager.warpedAllies)
+			{
+				if(myGameObject.name.Contains("EnemyForce"))
+				{
+					myGameObject.GetComponent<SteeringBehaviours>().lookAtShootEnabled = true;
+					randomTarget = Random.Range(0, GameManager.allyForces.Count);
+					target = GameManager.allyForces[randomTarget];
+					myGameObject.GetComponent<SteeringBehaviours>().seekPos = target.transform.position;
+					myGameObject.GetComponent<SteeringBehaviours>().maxSpeed = 0f;
+				}
+				if(myGameObject.name.Contains("AllyForce"))
+				{
+					myGameObject.GetComponent<SteeringBehaviours>().lookAtShootEnabled = true;
+					randomTarget = Random.Range(0, GameManager.enemyForces.Count);
+					target = GameManager.enemyForces[randomTarget];
+					myGameObject.GetComponent<SteeringBehaviours>().seekPos = target.transform.position;
+					myGameObject.GetComponent<SteeringBehaviours>().maxSpeed = 0f;
+				}
+			}
 		}
-		
+
 		public override void Exit()
 		{
 			
 		}
-		
+	
 		public override void Update()
 		{
 			if(target != null)
 			{
 				Shoot();
 			}
-			JammerSpotter();
-			if(GameManager.warpedAllies)
+			else
 			{
-				if(myGameObject.name == "EnemyForce")
+				if(GameManager.warpedAllies)
 				{
-					myGameObject.GetComponent<StateMachine>().SwitchState(new AlertState(myGameObject, target)); 
+					if(myGameObject.name.Contains("AllyForce"))
+					{
+						if(GameManager.enemyForces.Count > 0)
+						{
+							randomTarget = Random.Range(0, GameManager.enemyForces.Count);
+							target = GameManager.enemyForces[randomTarget];
+							myGameObject.GetComponent<SteeringBehaviours>().seekPos = target.transform.position;
+						}
+						else
+						{
+							myGameObject.GetComponent<SteeringBehaviours>().seekPos = myGameObject.transform.position;
+						}
+					}
+					if(myGameObject.name == "EnemyForce")
+					{
+						if(GameManager.allyForces.Count > 0)
+						{
+							randomTarget = Random.Range(0, GameManager.allyForces.Count);
+							target = GameManager.allyForces[randomTarget];
+							myGameObject.GetComponent<SteeringBehaviours>().seekPos = target.transform.position;
+						}
+						else
+						{
+							myGameObject.GetComponent<SteeringBehaviours>().seekPos = myGameObject.transform.position;
+						}
+					}
+				}
+			}
+			if(myGameObject.name.Contains("AllyPatrolShip"))
+			{
+				JammerSpotter();
+			}
+			if(myGameObject.name.Contains("EnemyForce"))
+			{
+				if(GameManager.warpedAllies && target != GameObject.Find("AllyForce"))
+				{
+					myGameObject.GetComponent<StateMachine>().SwitchState(new FireState(myGameObject, myGameObject));
 				}
 			}
 		}
+
 		void Shoot()
 		{
 			float range = 100.0f;           	
@@ -79,14 +136,22 @@ namespace BGE.States
 			}
 		}
 
+
 		void JammerSpotter()
 		{
 			if(myGameObject.name.Contains("Ally"))
 			{
 				if(target == null)
 				{
-					target = GameObject.Find ("Tower2");
-					myGameObject.GetComponent<SteeringBehaviours>().seekPos = target.transform.position;
+					if(GameObject.Find ("Tower2") != null)
+					{
+						target = GameObject.Find ("Tower2");
+						myGameObject.GetComponent<SteeringBehaviours>().seekPos = target.transform.position;
+					}
+					else
+					{
+						target = myGameObject;
+					}
 				}
 			}
 		}

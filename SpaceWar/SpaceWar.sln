@@ -5,6 +5,8 @@ Project("{3C956CED-BCFD-FF1E-058A-1E709ACB85B2}") = "SpaceWar", "Assembly-CSharp
 EndProject
 Project("{3C956CED-BCFD-FF1E-058A-1E709ACB85B2}") = "SpaceWar", "Assembly-CSharp.csproj", "{4868FE88-ABDE-3C1D-1606-8C3098182CA6}"
 EndProject
+Project("{3C956CED-BCFD-FF1E-058A-1E709ACB85B2}") = "SpaceWar", "Assembly-CSharp-Editor.csproj", "{1633AFA2-5E39-4B2A-514C-54B8D77A9BD3}"
+EndProject
 Project("{3C956CED-BCFD-FF1E-058A-1E709ACB85B2}") = "SpaceWar", "Assembly-UnityScript-firstpass.unityproj", "{E1E7E7C1-A4E0-AA49-17A0-66A37F45F002}"
 EndProject
 Project("{3C956CED-BCFD-FF1E-058A-1E709ACB85B2}") = "SpaceWar", "Assembly-UnityScript.unityproj", "{FAB25CA8-DED8-0964-A56E-FF74F295372B}"
@@ -25,6 +27,10 @@ Global
 		{4868FE88-ABDE-3C1D-1606-8C3098182CA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4868FE88-ABDE-3C1D-1606-8C3098182CA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4868FE88-ABDE-3C1D-1606-8C3098182CA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1633AFA2-5E39-4B2A-514C-54B8D77A9BD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1633AFA2-5E39-4B2A-514C-54B8D77A9BD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1633AFA2-5E39-4B2A-514C-54B8D77A9BD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1633AFA2-5E39-4B2A-514C-54B8D77A9BD3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E1E7E7C1-A4E0-AA49-17A0-66A37F45F002}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E1E7E7C1-A4E0-AA49-17A0-66A37F45F002}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1E7E7C1-A4E0-AA49-17A0-66A37F45F002}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -41,7 +47,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																																																																																																																																											GlobalSection(MonoDevelopProperties) = preSolution
+																																																																																																																																																						GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
