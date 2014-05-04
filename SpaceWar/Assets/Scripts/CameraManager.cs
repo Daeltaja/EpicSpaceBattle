@@ -12,6 +12,7 @@ namespace BGE.States
 		public List<float> camChange = new List<float>();
 		float timer;
 		int camChangeIndex = 0;
+		bool changeHP;
 
 		void Update () 
 		{
@@ -25,6 +26,7 @@ namespace BGE.States
 				camChangeIndex++;
 				timer = 0;
 			}
+
 		}
 	}
 }

@@ -130,7 +130,7 @@ namespace BGE.States
 				Vector3 myPos = new Vector3(asteroid.transform.position.x, asteroid.transform.position.y, asteroid.transform.position.z);
 				xPos += UnityEngine.Random.Range (6f, 10f);
 				yPos += UnityEngine.Random.Range (-8, 8);
-				zPos += UnityEngine.Random.Range (-10, 10);
+				zPos += (int)UnityEngine.Random.Range (-10, 10);
 				float randomSize = UnityEngine.Random.Range(1.5f, 7.5f);
 				asteroid.transform.localScale = new Vector3 (randomSize, randomSize, randomSize);
 				asteroid.name = "Asteroid";

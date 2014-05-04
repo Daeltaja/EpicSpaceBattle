@@ -99,7 +99,9 @@
      <Compile Include="Assets\Scripts\StateMachine.cs" />
      <Compile Include="Assets\Scripts\SteeringBehaviours.cs" />
      <Compile Include="Assets\Scripts\TeaseState.cs" />
+     <Compile Include="Assets\Scripts\WarpScale.cs" />
      <Compile Include="Assets\Scripts\WarpState.cs" />
+     <Compile Include="Assets\Scripts\iTween.cs" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\NoiseEffectShaderRGB.shader" />
      <None Include="Assets\Plugins\donotdelete.txt" />

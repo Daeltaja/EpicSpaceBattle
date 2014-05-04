@@ -20,8 +20,10 @@ namespace BGE.States
 	    public override void Enter()
 	    {
 	        myGameObject.GetComponent<SteeringBehaviours>().DisableAll();
-	        myGameObject.GetComponent<SteeringBehaviours>().evadeEnabled = true;
+			myGameObject.GetComponent<SteeringBehaviours>().evadeEnabled = true;
 			myGameObject.GetComponent<SteeringBehaviours>().evadeTarget = chaser;
+			myGameObject.GetComponent<SteeringBehaviours>().obstacleAvoidEnabled = true;
+			myGameObject.GetComponent<SteeringBehaviours>().maxSpeed = 13f;
 		}
 		
 		public override void Update()

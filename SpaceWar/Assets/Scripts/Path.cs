@@ -30,7 +30,7 @@ namespace BGE
 				lastX = currentX; //update last to current
 				lastZ = currentZ; //update last to current
 				
-				Vector3 newPos = new Vector3(lastX+15f, 3, lastZ-8f); //new position storing lastX and lastZ
+				Vector3 newPos = new Vector3(lastX+0f, 3, lastZ-8f); //new position storing lastX and lastZ
 				waypoints.Add(newPos); //stores the new Pos in waypoint list for line drawing
 			}
 		}

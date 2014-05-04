@@ -72,7 +72,7 @@ namespace BGE
             Vector3 desiredPos = transform.position - targetPos;
             desiredPos.Normalize();
             desiredPos *= maxSpeed;
-            return (desiredPos - velocity);
+			return (velocity - desiredPos);
         }
 
         Vector3 Arrive(Vector3 targetPos)
@@ -121,7 +121,7 @@ namespace BGE
 
 		Vector3 FollowPath()
 		{
-			path.CreatePath(4, 20);
+			path.CreatePath(8, 20);
 			float epsilon = 5.0f;
 			float dist = (transform.position - path.NextWaypoint()).magnitude;
 			if (dist < epsilon)

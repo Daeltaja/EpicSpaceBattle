@@ -3,14 +3,22 @@ using System.Collections;
 
 public class CameraRotation : MonoBehaviour {
 
-	bool rotate;
+	bool rotate, move;
+	public bool rotation, movement;
 	public float timer;
 	public float speed;
 
 	void Start()
 	{
 		rotate = false;
-		Invoke ("Delay", timer);
+		if(rotation)
+		{
+			Invoke ("DelayRotate", timer);
+		}
+		if(movement)
+		{
+			Invoke ("DelayMove", timer);
+		}
 	}
 
 	// Update is called once per frame
@@ -18,12 +26,22 @@ public class CameraRotation : MonoBehaviour {
 	{
 		if(rotate)
 		{
-			transform.Rotate(-transform.up * speed * Time.deltaTime, Space.Self);
+			transform.Rotate(-transform.up * speed * Time.deltaTime, Space.World);
+		}
+		if(move)
+		{
+			transform.Translate(transform.right * speed * Time.deltaTime, Space.World);
 		}
 	}
 
-	void Delay()
+	void DelayRotate()
 	{
 		rotate = true;
 	}
+
+	void DelayMove()
+	{
+		move = true;
+	}
+
 }

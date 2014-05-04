@@ -22,9 +22,8 @@ namespace BGE.States
 			myGameObject.GetComponent<SteeringBehaviours>().DisableAll();
 			myGameObject.GetComponent<SteeringBehaviours>().offsetPursuitEnabled = true;
 			myGameObject.GetComponent<SteeringBehaviours>().offsetPursuitTarget = enemyGameObject;
-			myGameObject.GetComponent<SteeringBehaviours>().obstacleAvoidEnabled = true;
 			laserGO = myGameObject.GetComponent<SteeringBehaviours>().laser;
-			myGameObject.GetComponent<SteeringBehaviours>().maxSpeed = 12f;
+			myGameObject.GetComponent<SteeringBehaviours>().maxSpeed = 8f;
 		}
 		
 		public override void Exit()
@@ -38,6 +37,7 @@ namespace BGE.States
 			{
 				myGameObject.GetComponent<StateMachine>().SwitchState(new PatrolState(myGameObject));
 			}
+
 			shootTime += Time.deltaTime;
 			float fov = Mathf.PI / 4.0f;
 			float angle;
@@ -51,8 +51,8 @@ namespace BGE.States
 				{
 					GameObject laser = MonoBehaviour.Instantiate(laserGO, myGameObject.transform.position, Quaternion.identity)as GameObject;
 					laser.name = myGameObject.GetComponent<SteeringBehaviours>().laser.name;
-					laser.transform.position = myGameObject.transform.position;
-					laser.transform.forward = myGameObject.transform.forward;
+					laser.transform.position = myGameObject.transform.position+=myGameObject.transform.forward*1f;
+					laser.transform.forward = myGameObject.transform.forward+=myGameObject.transform.up*=Random.Range (-.05f, .05f);
 					
 					shootTime = 0.0f;
 				}

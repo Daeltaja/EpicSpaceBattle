@@ -23,6 +23,7 @@ namespace BGE.States
 			myGameObject.GetComponent<SteeringBehaviours>().obstacleAvoidEnabled = true;
 			myGameObject.GetComponent<SteeringBehaviours>().seekPos = enemyGameObject.transform.position;
 			myGameObject.GetComponent<SteeringBehaviours>().maxSpeed = 12f;
+
 		}
 		
 		public override void Exit()
@@ -34,7 +35,7 @@ namespace BGE.States
 		{
 				if(enemyGameObject.name.StartsWith("EnemyTeaser"))
 				{
-					if((myGameObject.transform.position - enemyGameObject.transform.position).magnitude < 32f)
+					if((myGameObject.transform.position - enemyGameObject.transform.position).magnitude < 40f)
 					{
 						GameManager.warpedDiversion = false;
 						myGameObject.GetComponent<StateMachine>().SwitchState(new ChaseState(myGameObject, enemyGameObject));

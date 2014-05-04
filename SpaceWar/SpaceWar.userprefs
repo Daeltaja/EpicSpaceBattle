@@ -1,17 +1,21 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ChaseState.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\WarpScale.cs">
     <Files>
+      <File FileName="Assets\Scripts\GameManager.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\ChaseState.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\CameraManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\GameManager.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\AlertState.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\FireState.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\RadioState.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\PatrolState.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\SteeringBehaviours.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Entity.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\ChaseState.cs" Line="59" Column="5" />
+      <File FileName="Assets\Scripts\DiversionState.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\EvadeState.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CameraRotation.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Path.cs" Line="33" Column="41" />
+      <File FileName="Assets\Scripts\WarpScale.cs" Line="21" Column="62" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
