@@ -22,6 +22,9 @@ namespace BGE.States
 		public float checkOutDiversionDelay;
 		int asteroidCounter = 6;
 
+		public Texture text;
+		public float yPos;
+
 		public static float assaultDelay = 15f; //for the enemy forces assault after they warp in
 		public static bool warpedDiversion = true; //change to false, turn true after short delay, this starts off proceedings!
 		public static bool warpedForces;
@@ -30,10 +33,12 @@ namespace BGE.States
 
 		GameObject motherShip, teaser, jammer, asteroidSpawner, teaserWarp, cameraManager;
 		Vector3 warpPos;
+		bool showGUI = true;
 		CameraManager camManager;
 		
 		void Start () 
 		{
+			Invoke ("GUIToggle", 6f);
 			cameraManager = GameObject.Find ("GameManager");
 			camManager = cameraManager.GetComponent<CameraManager>();
 			teaser = GameObject.Find("EnemyTeaser");
@@ -139,5 +144,17 @@ namespace BGE.States
 			}
 			asteroidCounter --;
 		}
+
+		void GUIToggle()
+		{
+			showGUI = false;
+		}
+		void OnGUI()
+		{	
+			if(showGUI)
+				GUI.DrawTexture(new Rect(10, Screen.height-text.width/3.3f, text.width/2, text.height/2), text);
+		}
+			             
 	}
+
 }
