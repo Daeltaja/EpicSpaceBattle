@@ -13,7 +13,7 @@ namespace BGE.States
 		{
 			gm = GameObject.Find("GameManager").GetComponent<GameManager>();
 			gm.entities.Add(this.gameObject);
-			Invoke("Destroy", 2f);
+			Invoke("Destroy", 4f);
 		}
 
 		void Update()

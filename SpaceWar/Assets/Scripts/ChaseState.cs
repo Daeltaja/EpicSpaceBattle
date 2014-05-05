@@ -23,7 +23,7 @@ namespace BGE.States
 			myGameObject.GetComponent<SteeringBehaviours>().offsetPursuitEnabled = true;
 			myGameObject.GetComponent<SteeringBehaviours>().offsetPursuitTarget = enemyGameObject;
 			laserGO = myGameObject.GetComponent<SteeringBehaviours>().laser;
-			myGameObject.GetComponent<SteeringBehaviours>().maxSpeed = 8f;
+			myGameObject.GetComponent<SteeringBehaviours>().maxSpeed = 16f;
 		}
 		
 		public override void Exit()

@@ -131,8 +131,8 @@ namespace BGE.States
 				GameObject asteroid = Instantiate(asteroidGO, spawner, asteroidSpawner.transform.rotation) as GameObject;
 				Vector3 myPos = new Vector3(asteroid.transform.position.x, asteroid.transform.position.y, asteroid.transform.position.z);
 				xPos += UnityEngine.Random.Range (6f, 10f);
-				yPos += UnityEngine.Random.Range (-8, 8);
-				zPos += (int)UnityEngine.Random.Range (-10, 10);
+				yPos += UnityEngine.Random.Range (-9, 9);
+				zPos += (int)UnityEngine.Random.Range (-11, 11);
 				float randomSize = UnityEngine.Random.Range(1.5f, 7.5f);
 				asteroid.transform.localScale = new Vector3 (randomSize, randomSize, randomSize);
 				asteroid.name = "Asteroid";

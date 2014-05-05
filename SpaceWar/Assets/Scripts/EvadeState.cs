@@ -23,7 +23,7 @@ namespace BGE.States
 			myGameObject.GetComponent<SteeringBehaviours>().evadeEnabled = true;
 			myGameObject.GetComponent<SteeringBehaviours>().evadeTarget = chaser;
 			myGameObject.GetComponent<SteeringBehaviours>().obstacleAvoidEnabled = true;
-			myGameObject.GetComponent<SteeringBehaviours>().maxSpeed = 13f;
+			myGameObject.GetComponent<SteeringBehaviours>().maxSpeed = 12f;
 		}
 		
 		public override void Update()
