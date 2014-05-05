@@ -50,11 +50,11 @@ namespace BGE.States
 				}
 			}
 
-			if(Input.GetKeyDown(KeyCode.Alpha1))
+			if(Input.GetKeyDown(KeyCode.P))
 			{
 				Application.LoadLevel (0);
 			}
-			if(Input.GetKeyDown(KeyCode.Alpha2))
+			if(Input.GetKeyDown(KeyCode.O))
 			{
 				Application.LoadLevel (1);
 			}
