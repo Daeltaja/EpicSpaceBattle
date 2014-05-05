@@ -51,8 +51,9 @@ namespace BGE.States
 				{
 					GameObject laser = MonoBehaviour.Instantiate(laserGO, myGameObject.transform.position, Quaternion.identity)as GameObject;
 					laser.name = myGameObject.GetComponent<SteeringBehaviours>().laser.name;
-					laser.transform.position = myGameObject.transform.position+=myGameObject.transform.forward*1f;
-					laser.transform.forward = myGameObject.transform.forward+=myGameObject.transform.up*=Random.Range (-.05f, .05f);
+
+					laser.transform.forward = myGameObject.transform.forward += myGameObject.transform.up*=Random.Range (-.05f, .05f);
+					laser.transform.position = laser.transform.position += laser.transform.forward * 1f;
 					
 					shootTime = 0.0f;
 				}

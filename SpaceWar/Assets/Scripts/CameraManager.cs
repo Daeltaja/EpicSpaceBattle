@@ -10,9 +10,9 @@ namespace BGE.States
 	{
 		public List<GameObject> cameras = new List<GameObject>();
 		public List<float> camChange = new List<float>();
-		float timer;
+		public float timer;
 		int camChangeIndex = 0;
-		bool changeHP;
+		bool playAudio = true;
 
 		void Update () 
 		{
@@ -24,9 +24,12 @@ namespace BGE.States
 				cameras[camChangeIndex+1].transform.GetChild(0).gameObject.GetComponent<Camera>().enabled = true;
 				cameras[camChangeIndex+1].transform.GetChild(0).gameObject.GetComponent<AudioListener>().enabled = true;
 				camChangeIndex++;
+				if(cameras[camChangeIndex].transform.GetChild(0).gameObject.GetComponent<AudioSource>() != null)
+				{
+					cameras[camChangeIndex].transform.GetChild(0).gameObject.audio.Play ();
+				}
 				timer = 0;
 			}
-
 		}
 	}
 }

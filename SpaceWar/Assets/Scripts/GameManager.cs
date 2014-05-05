@@ -31,16 +31,13 @@ namespace BGE.States
 		public static bool warpedAllies;
 		public static bool jammerSearch; 
 
-		GameObject motherShip, teaser, jammer, asteroidSpawner, teaserWarp, cameraManager;
+		GameObject motherShip, teaser, jammer, asteroidSpawner, teaserWarp;
 		Vector3 warpPos;
 		bool showGUI = true;
-		CameraManager camManager;
 		
 		void Start () 
 		{
 			Invoke ("GUIToggle", 6f);
-			cameraManager = GameObject.Find ("GameManager");
-			camManager = cameraManager.GetComponent<CameraManager>();
 			teaser = GameObject.Find("EnemyTeaser");
 			motherShip = GameObject.Find ("Mothership");
 			jammer = GameObject.Find ("Jammer");
@@ -102,7 +99,7 @@ namespace BGE.States
 
 		void WarpAllies() //forces warp into existance!
 		{
-			float xPos = -20, yPos = 0, zPos = -80; //change the spawn in position of the enemy forces here!
+			float xPos = -20, yPos = 0, zPos = -92; //change the spawn in position of the enemy forces here!
 			for(int i = 0; i < allyForceCount; i++)
 			{
 				Vector3 randPos = new Vector3(xPos, yPos, zPos);
