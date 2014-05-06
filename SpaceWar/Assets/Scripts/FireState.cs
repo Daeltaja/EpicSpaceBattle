@@ -78,7 +78,7 @@ namespace BGE.States
 						}
 						else
 						{
-							myGameObject.GetComponent<SteeringBehaviours>().seekPos = myGameObject.transform.position;
+							myGameObject.GetComponent<StateMachine>().SwitchState(new PatrolState(myGameObject));
 						}
 					}
 					if(myGameObject.name == "EnemyForce")
@@ -91,7 +91,7 @@ namespace BGE.States
 						}
 						else
 						{
-							myGameObject.GetComponent<SteeringBehaviours>().seekPos = myGameObject.transform.position;
+							myGameObject.GetComponent<StateMachine>().SwitchState(new PatrolState(myGameObject));
 						}
 					}
 				}
